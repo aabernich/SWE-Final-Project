@@ -7,6 +7,3 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL UNIQUE,
     passwordHash VARCHAR(255) NOT NULL
 );
-
-INSERT INTO users (username, email, passwordHash)
-VALUES ('john doe', 'johndoe@gmail.com', 'testPassword');

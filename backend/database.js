@@ -10,12 +10,13 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE
 }).promise()
 
-export async function getUser(username){
+export async function getUser(username, password){
     const [result] = await pool.query(`
     SELECT * 
     FROM users 
-    WHERE username = ?
-    `, [username])
+    WHERE username = ? 
+    AND passwordHash = ?
+    `, [username, password])
     return result[0]
 }
 
@@ -24,5 +25,5 @@ export async function createUser(username, email, password){
     INSERT INTO users (username, email, passwordHash) 
     VALUES (?, ?, ?)
     `, [username, email, password])
-    return getUser(username)
+    return getUser(username, password)
 }
