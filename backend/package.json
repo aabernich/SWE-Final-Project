@@ -1,0 +1,29 @@
+{
+  "name": "swe-final-project",
+  "version": "1.0.0",
+  "description": "Repository for Final Project for SWE",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aabernich/SWE-Final-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aabernich/SWE-Final-Project/issues"
+  },
+  "homepage": "https://github.com/aabernich/SWE-Final-Project#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.0.1",
+    "mysql2": "^3.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
