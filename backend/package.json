@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/aabernich/SWE-Final-Project#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.0.1",
     "mysql2": "^3.13.0"

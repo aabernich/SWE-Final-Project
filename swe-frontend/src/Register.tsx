@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 
 export const Register = (props: { onFormSwitch: (formName: string) => void }) => {
@@ -6,9 +7,20 @@ export const Register = (props: { onFormSwitch: (formName: string) => void }) =>
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(email);
+        try{
+        const response = await axios.post("http://localhost:8080/users", {
+            username: name,
+            email,
+            password: pass,
+        });
+        console.log(response);
+        props.onFormSwitch('login');
+        } catch (error) {
+            console.error("Error registering", error);
+        }
     };
 
     return(
