@@ -9,6 +9,9 @@ app.use(express.json())
 app.get("/users", async (req,res) => {
     const {email, password} = req.body
     const user = await getUser(email, password)
+    if (!user) {
+        return res.status(404).json({ message: "User not found." });
+    }
     res.send(user)
 })
 
