@@ -7,8 +7,8 @@ const app = express()
 app.use(express.json())
 
 app.get("/users", async (req,res) => {
-    const {username, password} = req.body
-    const user = await getUser(username, password)
+    const {email, password} = req.body
+    const user = await getUser(email, password)
     res.send(user)
 })
 
