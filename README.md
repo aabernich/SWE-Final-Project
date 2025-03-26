@@ -6,3 +6,9 @@ Repository for Final Project for SWE
 2. cd into swe-frontend
 3. run npm install to download dependencies
 4. run npm run dev
+
+## Steps to Run Back-End
+1. Make sure you have node
+2. cd into backend
+3. run npm install to download dependencies
+4. run npm run dev

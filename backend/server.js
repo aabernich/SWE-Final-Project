@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-app.get("/users", async (req,res) => {
+app.post("/users/login", async (req,res) => {
     const {email, password} = req.body
     const user = await getUser(email, password)
     if (!user) {
