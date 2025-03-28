@@ -40,9 +40,9 @@ export const Register = (props: { onFormSwitch: (formName: string) => void }) =>
             <label htmlFor="password">Password</label>
             <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Password" id="password" name="password"/>
             <button type="submit">Register</button>
-            {success && <p style={{color: 'green'}}>{success}</p>}
-            {error && <p style={{color: 'red'}}>{error}</p>}
         </form>
+        {success && <div style={{color: 'green'}}>{success}</div>}
+        {error && <div style={{color: 'red'}}>{error}</div>}
         <button className="link-button" onClick={() => props.onFormSwitch('login')}>Already have an account?</button>
         </div>
         </>
