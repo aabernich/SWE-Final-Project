@@ -1,28 +1,21 @@
-import React, { useState } from "react";
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css'
-import { Login } from "./Login"
-import { Register } from "./Register"
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './App.css';
+
+// Import your components/pages
+import HomePage from './pages/HomePage';
 
 function App() {
-  //const [count, setCount] = useState(0)
-  const [currentForm, setCurrentForm] = useState("login");
-
-  const toggleForm = (formName: React.SetStateAction<string>) => {
-    setCurrentForm(formName);
-  }
-
   return (
-    <>
-      <div>
-        {
-          currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
-        }
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Define routes for different pages */}
+          <Route path="/" element={<HomePage />} />
+        </Routes>
       </div>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
-//continue at 15:00 mark
+export default App;
