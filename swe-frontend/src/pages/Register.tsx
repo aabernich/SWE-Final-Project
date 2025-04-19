@@ -45,7 +45,7 @@ export const Register = (props: { onFormSwitch: (formName: string) => void }) =>
         </form>
         {success && <div style={{color: 'green'}}>{success}</div>}
         {error && <div style={{color: 'red'}}>{error}</div>}
-        <button className="link-button" onClick={() => navigate('/login')}>Don't have an account?</button>
+        <button className="link-button" onClick={() => navigate('/login')}>Already have an account?</button>
         <button className="link-button" onClick={() => navigate('/')}>Back to Home page</button>
         </div>
         </>
