@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Header from "../components/Header";
 
 export const Login = (props: { onFormSwitch: (formName: string) => void }) => {
     const [email, setEmail] = useState('');
@@ -30,6 +31,7 @@ export const Login = (props: { onFormSwitch: (formName: string) => void }) => {
 
     return(
         <>
+        <Header />
         <div className={"auth-form-container"}>
             <h1>International Fabrics</h1>
         <form className={"login-form"} onSubmit={handleSubmit}>

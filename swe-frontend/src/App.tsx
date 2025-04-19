@@ -4,6 +4,7 @@ import './App.css';
 
 // Import your components/pages
 import HomePage from './pages/HomePage';
+import ProductPage from "./pages/ProductPage";
 import {Register} from './pages/Register';
 import { Login } from './pages/Login';
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login onFormSwitch={function (formName: string): void {
             throw new Error('Function not implemented.');
           } } />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </div>
     </Router>

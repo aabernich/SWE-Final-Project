@@ -1,0 +1,52 @@
+/* Header Styling */
+.homepage-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center; /* Vertically center the logo and text */
+  gap: 10px; /* Add space between the logo image and the site name */
+}
+
+.logo-img {
+  height: 40px; /* Set the logo image size */
+}
+
+.site-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  margin: 0; /* Remove any default margin around the site name */
+}
+
+/* Icons Styling */
+.icons {
+  display: flex;
+  gap: 20px;
+  position: absolute;
+  left: 85%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.icon:hover {
+  opacity: 0.7;
+}

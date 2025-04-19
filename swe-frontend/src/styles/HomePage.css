@@ -1,61 +1,18 @@
-/* HomePage.css */
-
-.homepage-header {
-  width: 100%;
-  position: fixed; /* Sticks it to the top */
-  top: 0;
-  left: 0;
-  background-color: #ffffff; /* White background */
-  display: flex;
-  justify-content: space-between; /* Space between logo and icons */
-  align-items: center;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
-  z-index: 1000;
-}
-
+/* Layout Fixes */
 .homepage-container {
-  padding-top: 100px; /* Make space for the fixed header */
+  padding-top: 100px; /* Account for fixed header */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.site-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: black; /* Set text color to black */
+
+/* Main Content */
+.main-content {
+  padding: 2rem;
 }
 
-.logo {
-  display: flex;
-  align-items: center; /* Vertically center the logo image and text */
-}
-
-.logo-img {
-  height: 40px; /* Set the logo image size */
-  margin-right: 10px; /* Space between logo image and text */
-}
-
-.site-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: black; /* Set text color to black */
-}
-
-.icons {
-  display: flex;
-  gap: 20px; /* Adds space between icons */
-  position: absolute; /* Position the icons relative to the header */
-  left: 85%; /* Pushes the icons 1/3 of the way from the left */
-  top: 50%; /* Centers the icons vertically within the header */
-  transform: translateY(-50%); /* Corrects the vertical alignment */
-}
-
-.icon {
-  height: 30px;
-  width: 30px;
-  cursor: pointer;
-}
-
-.icon svg {
-  height: 100%; /* Ensure the SVGs fill the icon container */
-  width: auto; /* Keeps the aspect ratio intact */
+.homepage-subtitle {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }

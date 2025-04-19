@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Header from "../components/Header";
 
 
 export const Register = (props: { onFormSwitch: (formName: string) => void }) => {
@@ -32,6 +33,7 @@ export const Register = (props: { onFormSwitch: (formName: string) => void }) =>
 
     return(
         <>
+        <Header />
         <div className={"auth-form-container"}>
             <h1>International Fabrics</h1>
         <form className={"register-form"} onSubmit={handleSubmit}>
