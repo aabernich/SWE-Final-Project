@@ -4,6 +4,8 @@ import './App.css';
 
 // Import your components/pages
 import HomePage from './pages/HomePage';
+import {Register} from './pages/Register';
+import { Login } from './pages/Login';
 
 function App() {
   return (
@@ -12,6 +14,12 @@ function App() {
         <Routes>
           {/* Define routes for different pages */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<Register onFormSwitch={function (formName: string): void {
+            throw new Error('Function not implemented.');
+          } } />} />
+          <Route path="/login" element={<Login onFormSwitch={function (formName: string): void {
+            throw new Error('Function not implemented.');
+          } } />} />
         </Routes>
       </div>
     </Router>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
@@ -8,6 +9,7 @@ export const Register = (props: { onFormSwitch: (formName: string) => void }) =>
     const [name, setName] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -43,7 +45,8 @@ export const Register = (props: { onFormSwitch: (formName: string) => void }) =>
         </form>
         {success && <div style={{color: 'green'}}>{success}</div>}
         {error && <div style={{color: 'red'}}>{error}</div>}
-        <button className="link-button" onClick={() => props.onFormSwitch('login')}>Already have an account?</button>
+        <button className="link-button" onClick={() => navigate('/login')}>Don't have an account?</button>
+        <button className="link-button" onClick={() => navigate('/')}>Back to Home page</button>
         </div>
         </>
     )

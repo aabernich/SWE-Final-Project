@@ -22,7 +22,7 @@ const HomePage = () => {
           <Link to="/cart">
             <img src={cartIcon} alt="Shopping Cart" className="icon" />
           </Link>
-          <Link to="/profile">
+          <Link to="/register">
             <img src={userIcon} alt="User Profile" className="icon" />
           </Link>
         </div>
