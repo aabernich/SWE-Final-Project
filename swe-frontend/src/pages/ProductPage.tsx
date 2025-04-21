@@ -1,18 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
-import sampleClothes from "../data/mockClothes";
+import axios from "axios";;
 import "../styles/ProductPage.css";
+
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  manufacturer: string;
+  country: string;
+  image: string;
+  description: string;
+  sizes: string[];
+  colors: string[];
+}
 
 const ProductPage = () => {
 
   const { id } = useParams<{ id: string }>();
-  const product = sampleClothes.find(item => item.id === parseInt(id || "", 10));
+  const [product,setProduct] = useState<Product | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
 
-  if (!product) return <h2>Product not found</h2>;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/products/id`, {
+          params: { id },
+        });
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching product", error);
+        setError("Product not found");
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (error || !product) return <h2>{error}</h2>;
 
   return (
     <div className="product-page-container">
@@ -25,7 +54,7 @@ const ProductPage = () => {
         <div className="product-details">
           <h1 className="product-title">{product.name}</h1>
           <p className="product-brand">{product.manufacturer} — {product.country}</p>
-          <p className="product-price">${product.price.toFixed(2)}</p>
+          <p className="product-price">${product.price}</p>
 
           {/* Size selection */}
           <div className="product-options">

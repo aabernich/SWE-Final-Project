@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 import{getUser, createUser} from './database.js'
-import { filterProducts, getAvailableFilters } from './database.js';
+import { filterProducts, getAvailableFilters, getProductById } from './database.js';
 
 const app = express()
 
@@ -28,6 +28,15 @@ app.get("/products", async (req, res) => {
     const {sortOrder, selectedBrand, selectedCountry} = req.query
     const products = await filterProducts(sortOrder, selectedBrand, selectedCountry)
     res.status(203).send(products)
+})
+
+app.get("/products/id", async (req, res) => {
+    const {id} = req.query
+    const product = await getProductById(id)
+    if (!product) {
+        return res.status(404).json({ message: "Product not found." });
+    }
+    res.status(203).send(product)
 })
 
 app.get("/filters", async (req, res) => {

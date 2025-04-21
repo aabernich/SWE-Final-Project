@@ -62,3 +62,12 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
       countries: countryRows.map(row => row.country),
     };
   }
+
+  export async function getProductById(id) {
+    const [result] = await pool.query(`
+      SELECT * 
+      FROM products 
+      WHERE id = ?
+    `, [id]);
+    return result[0];
+  }
