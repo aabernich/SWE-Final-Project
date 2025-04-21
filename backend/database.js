@@ -27,3 +27,38 @@ export async function createUser(username, email, password){
     `, [username, email, password])
     return getUser(username, password)
 }
+
+export async function filterProducts(sortOrder, selectedBrand, selectedCountry) {
+    let query = `SELECT * FROM products WHERE 1=1`;
+    let queryParams = [];
+  
+    if (selectedBrand !== 'all') {
+      query += ' AND manufacturer = ?';
+      queryParams.push(selectedBrand);
+    }
+  
+    if (selectedCountry !== 'all') {
+      query += ' AND country = ?';
+      queryParams.push(selectedCountry);
+    }
+  
+    query += ` ORDER BY price ${sortOrder === 'desc' ? 'DESC' : 'ASC'}`
+  
+    try {
+      const [results] = await pool.query(query, queryParams);
+      return results;
+    } catch (err) {
+      console.error("Error executing query", err);
+      throw err;
+    }
+  }
+
+  export async function getAvailableFilters() {
+    const [brandRows] = await pool.query("SELECT DISTINCT manufacturer FROM products");
+    const [countryRows] = await pool.query("SELECT DISTINCT country FROM products");
+  
+    return {
+      brands: brandRows.map(row => row.manufacturer),
+      countries: countryRows.map(row => row.country),
+    };
+  }

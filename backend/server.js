@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 import{getUser, createUser} from './database.js'
+import { filterProducts, getAvailableFilters } from './database.js';
 
 const app = express()
 
@@ -22,6 +23,18 @@ app.post("/users", async (req,res) => {
     const user = await createUser(username, email, password)
     res.status(201).send(user)
 })
+
+app.get("/products", async (req, res) => {
+    const {sortOrder, selectedBrand, selectedCountry} = req.query
+    const products = await filterProducts(sortOrder, selectedBrand, selectedCountry)
+    res.status(203).send(products)
+})
+
+app.get("/filters", async (req, res) => {
+    const filters = await getAvailableFilters()
+    res.status(202).send(filters)
+})
+  
 
 app.use((err, req, res, next) => {
     console.error(err.stack)

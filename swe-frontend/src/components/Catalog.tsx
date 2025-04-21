@@ -1,12 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Catalog.css";
-import sampleClothes from "../data/mockClothes";
+import axios from "axios";
+
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  manufacturer: string;
+  country: string;
+  image: string;
+  description: string;
+  sizes: string[];
+  colors: string[];
+}
 
 const Catalog = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedBrand, setSelectedBrand] = useState("all");
   const [selectedCountry, setSelectedCountry] = useState("all");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
+  const [countries, setCountries] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/products', {
+          params: {
+            sortOrder,
+            selectedBrand,
+            selectedCountry,
+          },
+        });
+        setProducts(response.data); 
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
+
+    const fetchFilters = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/filters');
+        setBrands(response.data.brands);
+        setCountries(response.data.countries);
+      } catch (error) {
+        console.error("Error fetching filters", error);
+      }
+    };
+
+    fetchProducts();  
+    fetchFilters(); 
+  }, [sortOrder, selectedBrand, selectedCountry]);
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value);
@@ -19,20 +64,6 @@ const Catalog = () => {
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCountry(e.target.value);
   };
-
-  const filteredAndSorted = sampleClothes
-    .filter(item => {
-      return (
-        (selectedBrand === "all" || item.manufacturer === selectedBrand) &&
-        (selectedCountry === "all" || item.country === selectedCountry)
-      );
-    })
-    .sort((a, b) => {
-      return sortOrder === "asc" ? a.price - b.price : b.price - a.price;
-    });
-
-  const brands = Array.from(new Set(sampleClothes.map(item => item.manufacturer)));
-  const countries = Array.from(new Set(sampleClothes.map(item => item.country)));
 
   return (
     <div className="catalog-container">
@@ -69,11 +100,11 @@ const Catalog = () => {
       </div>
 
       <div className="catalog-grid">
-        {filteredAndSorted.map(item => (
+        {products.map(item => (
           <Link to={`/product/${item.id}`} key={item.id} className="catalog-card">
             <img src={item.image} alt={item.name} />
             <h2>{item.name}</h2>
-            <p>${item.price.toFixed(2)}</p>
+            <p>${item.price}</p>
             <p>{item.manufacturer} - {item.country}</p>
             </Link>
         ))}
