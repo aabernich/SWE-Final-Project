@@ -88,3 +88,29 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     console.log(result[0]);
     return result;
   }
+
+  export async function deleteCartItem(Id) {
+    const [result] = await pool.query(`
+      DELETE FROM cart_items 
+      WHERE id = ?
+    `, [Id]);
+    return result.affectedRows > 0;
+  }
+
+  export async function leaveReview(productId, userId, rating, review) {
+    const [result] = await pool.query(`
+      INSERT INTO product_reviews (product_id, user_id, rating, comment) 
+      VALUES (?, ?, ?, ?)
+    `, [productId, userId, rating, review]);
+    return result.affectedRows > 0;
+  }
+
+  export async function getReviews(productId) {
+    const [result] = await pool.query(`
+      SELECT r.rating, r.comment, u.username, u.id 
+      FROM product_reviews r
+      JOIN users u ON r.user_id = u.id
+      WHERE r.product_id = ?
+    `, [productId]);
+    return result;
+  }

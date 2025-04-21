@@ -16,6 +16,13 @@ interface Product {
   colors: string[];
 }
 
+interface Review {
+  rating: number;
+  comment: string;
+  username: string;
+  userId: number;
+}
+
 const ProductPage = () => {
 
   const { id } = useParams<{ id: string }>();
@@ -25,6 +32,9 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
+
+  
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -39,7 +49,19 @@ const ProductPage = () => {
       }
     };
 
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/reviews`, {
+          params: { productId: id },
+        });
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews", error);
+      }
+    };
+
     fetchProduct();
+    fetchReviews();
   }, [id]);
 
   const handleAdd = async () => {
@@ -130,8 +152,20 @@ const ProductPage = () => {
       </div>
 
       <div className="product-reviews">
-        <h3>Customer Reviews</h3>
-        <p>No reviews yet. Be the first to write one!</p>
+      <h3>Customer Reviews</h3>
+        {reviews.length > 0 ? (
+          <div>
+            {reviews.map((review) => (
+              <div key={review.userId} className="review-item">
+                <h4>{review.username}</h4>
+                <p>Rating: {review.rating}/5</p>
+                <p>{review.comment}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No reviews yet. Be the first to write one!</p>
+        )}
       </div>
     </div>
   );

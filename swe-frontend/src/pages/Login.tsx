@@ -10,7 +10,6 @@ export const Login = (props: { onFormSwitch: (formName: string) => void }) => {
     const [success, setSuccess] = useState<string | null>(null);
     const navigate = useNavigate();
         
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(email);
@@ -31,6 +30,13 @@ export const Login = (props: { onFormSwitch: (formName: string) => void }) => {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("userID");
+        localStorage.removeItem("userName");
+        setSuccess("Logged out successfully.");
+        navigate('/');
+    };
+
     return(
         <>
         <Header />
@@ -47,6 +53,7 @@ export const Login = (props: { onFormSwitch: (formName: string) => void }) => {
         {success && <div style={{color: 'green'}}>{success}</div>}
         <button className="link-button" onClick={() => navigate('/register')}>Don't have an account?</button>
         <button className="link-button" onClick={() => navigate('/')}>Back to Home page</button>
+        <button className="link-button" onClick={handleLogout}>Sign Out</button>
         </div>
         </>
     )

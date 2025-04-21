@@ -3,7 +3,8 @@ import cors from 'cors'
 
 import{getUser, createUser} from './database.js'
 import { filterProducts, getAvailableFilters, getProductById } from './database.js';
-import { addToCart, getCartItems } from './database.js';
+import { addToCart, getCartItems, deleteCartItem } from './database.js';
+import { leaveReview, getReviews } from './database.js';
 
 const app = express()
 
@@ -58,6 +59,30 @@ app.get("/cart", async (req, res) => {
         return res.status(404).json({ message: "Cart not found." });
     }
     res.status(200).send(cart)
+})
+
+app.delete("/cart", async (req, res) => {
+    const {Id} = req.body
+    const cart = await deleteCartItem(Id)
+    if (!cart) {
+        return res.status(404).json({ message: "Cart not found." });
+    }
+    res.status(200).send(cart)
+})
+
+app.post("/reviews", async (req, res) => {
+    const {productId, userId, rating, comment} = req.body
+    const review = await leaveReview(productId, userId, rating, comment)
+    res.status(201).send(review)
+})
+
+app.get("/reviews", async (req, res) => {
+    const {productId} = req.query
+    const reviews = await getReviews(productId)
+    if (!reviews) {
+        return res.status(404).json({ message: "Reviews not found." });
+    }
+    res.status(200).send(reviews)
 })
   
 
