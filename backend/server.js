@@ -3,6 +3,7 @@ import cors from 'cors'
 
 import{getUser, createUser} from './database.js'
 import { filterProducts, getAvailableFilters, getProductById } from './database.js';
+import { addToCart, getCartItems } from './database.js';
 
 const app = express()
 
@@ -36,12 +37,27 @@ app.get("/products/id", async (req, res) => {
     if (!product) {
         return res.status(404).json({ message: "Product not found." });
     }
-    res.status(203).send(product)
+    res.status(201).send(product)
 })
 
 app.get("/filters", async (req, res) => {
     const filters = await getAvailableFilters()
-    res.status(202).send(filters)
+    res.status(201).send(filters)
+})
+
+app.post("/addcart", async (req, res) => {
+    const {userId, productId, size, color} = req.body
+    const cart = await addToCart(userId, productId, size, color)
+    res.status(201).send(cart)
+})
+
+app.get("/cart", async (req, res) => {
+    const {userId} = req.query
+    const cart = await getCartItems(userId)
+    if (!cart) {
+        return res.status(404).json({ message: "Cart not found." });
+    }
+    res.status(200).send(cart)
 })
   
 

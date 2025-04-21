@@ -71,3 +71,20 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     `, [id]);
     return result[0];
   }
+
+  export async function addToCart(userId, productId, size, color) {
+    await pool.query(`
+      INSERT INTO cart_items (user_id, product_id, size, color) 
+      VALUES (?, ?, ?, ?)
+    `, [userId, productId, size, color]);
+  }
+
+  export async function getCartItems(userId) {
+    const [result] = await pool.query(`
+      SELECT * 
+      FROM cart_items 
+      WHERE user_id = ?
+    `, [userId]);
+    console.log(result[0]);
+    return result;
+  }

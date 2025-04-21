@@ -24,6 +24,7 @@ const ProductPage = () => {
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [feedback, setFeedback] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -40,6 +41,28 @@ const ProductPage = () => {
 
     fetchProduct();
   }, [id]);
+
+  const handleAdd = async () => {
+    if (!product || !selectedSize || !selectedColor) {
+      setFeedback("Please select both size and color.");
+      return;
+    }
+
+    try {
+      const userId = localStorage.getItem("userID");
+      await axios.post("http://localhost:8080/addcart", {
+        userId,
+        productId: product.id,
+        size: selectedSize,
+        color: selectedColor,
+      });
+
+      setFeedback("Added to cart!");
+    } catch (err) {
+      console.error("Error adding to cart", err);
+      setFeedback("Failed to add to cart.");
+    }
+  };
 
   if (error || !product) return <h2>{error}</h2>;
 
@@ -87,8 +110,8 @@ const ProductPage = () => {
           </div>
 
           <div className="product-buttons">
-            <button className="add-to-cart">Add to Cart</button>
-            <button className="add-to-wishlist">♡ Wishlist</button>
+            <button className="add-to-cart" onClick={handleAdd}>Add to Cart</button>
+            {feedback && <p style={{ marginTop: "10px" }}>{feedback}</p>}
           </div>
 
           <div className="product-description">
@@ -101,7 +124,6 @@ const ProductPage = () => {
             <ul>
               <li>Material: 100% Cotton</li>
               <li>Care: Machine wash cold</li>
-              <li>Available sizes: S, M, L, XL</li>
             </ul>
           </div>
         </div>

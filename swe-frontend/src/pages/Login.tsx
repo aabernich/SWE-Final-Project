@@ -22,7 +22,9 @@ export const Login = (props: { onFormSwitch: (formName: string) => void }) => {
             password: pass,
         });
         console.log(response);
-        setSuccess("Successful Login Test Message");
+        setSuccess("Successful Login. Please refresh page.");
+        localStorage.setItem("userID", String(response.data.id));
+        localStorage.setItem("userName", String(response.data.username));
         } catch (error) {
             console.error("Error Logging In, Recheck Credentials.", error);
             setError("Invalid email or password. Recheck Credentials.");
