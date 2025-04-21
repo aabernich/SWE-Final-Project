@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import ProductPage from "./pages/ProductPage";
 import {Register} from './pages/Register';
 import { Login } from './pages/Login';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             throw new Error('Function not implemented.');
           } } />} />
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </div>
     </Router>

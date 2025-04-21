@@ -80,13 +80,30 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
   }
 
   export async function getCartItems(userId) {
-    const [result] = await pool.query(`
-      SELECT * 
-      FROM cart_items 
-      WHERE user_id = ?
-    `, [userId]);
-    console.log(result[0]);
-    return result;
+    try {
+      const [rows] = await pool.query(
+        `
+          SELECT 
+            ci.id AS id,
+            ci.product_id,
+            ci.quantity,
+            ci.size,
+            ci.color,
+            p.name,
+            p.price,
+            p.image
+          FROM cart_items ci
+          JOIN products p ON ci.product_id = p.id
+          WHERE ci.user_id = ?
+        `,
+        [userId]
+      );
+  
+      return rows;
+    } catch (error) {
+      console.error("Error fetching joined cart items:", error);
+      throw error;
+    }
   }
 
   export async function deleteCartItem(Id) {
@@ -114,3 +131,19 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     `, [productId]);
     return result;
   }
+
+  export async function updateCartQuantity(id, quantity) {
+    try {
+      const [result] = await pool.query(
+        `UPDATE cart_items SET quantity = ? WHERE id = ?`,
+        [quantity, id]
+      );
+      return result;
+    } catch (error) {
+      console.error("Error updating quantity in cart:", error);
+      throw error;
+    }
+  }
+
+
+  

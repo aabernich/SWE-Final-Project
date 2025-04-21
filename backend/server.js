@@ -3,7 +3,7 @@ import cors from 'cors'
 
 import{getUser, createUser} from './database.js'
 import { filterProducts, getAvailableFilters, getProductById } from './database.js';
-import { addToCart, getCartItems, deleteCartItem } from './database.js';
+import { addToCart, getCartItems, deleteCartItem, updateCartQuantity } from './database.js';
 import { leaveReview, getReviews } from './database.js';
 
 const app = express()
@@ -53,13 +53,19 @@ app.post("/addcart", async (req, res) => {
 })
 
 app.get("/cart", async (req, res) => {
-    const {userId} = req.query
-    const cart = await getCartItems(userId)
-    if (!cart) {
-        return res.status(404).json({ message: "Cart not found." });
+    const userId = req.query.userId;
+  
+    if (!userId) {
+      return res.status(400).json({ error: "Missing userId" });
     }
-    res.status(200).send(cart)
-})
+  
+    try {
+      const items = await getCartItems(userId);
+      res.status(200).json(items);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch cart items" });
+    }
+  });
 
 app.delete("/cart", async (req, res) => {
     const {Id} = req.body
@@ -69,6 +75,22 @@ app.delete("/cart", async (req, res) => {
     }
     res.status(200).send(cart)
 })
+
+
+app.put("/cart/quantity", async (req, res) => {
+    const { id, quantity } = req.body;
+  
+    if (!id || typeof quantity !== "number") {
+      return res.status(400).json({ error: "Invalid ID or quantity" });
+    }
+  
+    try {
+      const result = await updateCartQuantity(id, quantity);
+      res.status(200).json({ message: "Quantity updated", result });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update quantity" });
+    }
+  });
 
 app.post("/reviews", async (req, res) => {
     const {productId, userId, rating, comment} = req.body
