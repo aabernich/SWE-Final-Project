@@ -16,7 +16,7 @@ interface CartItem {
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userID");
 
   useEffect(() => {
     const fetchCart = async () => {
