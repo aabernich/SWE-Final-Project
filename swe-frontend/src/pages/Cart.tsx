@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../Styles/Cart.css";
 
@@ -24,6 +24,7 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pastPurchases, setPastPurchases] = useState<PastPurchase[]>([]);
   const userId = localStorage.getItem("userID");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -144,7 +145,14 @@ const Cart = () => {
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
-            <button className="checkout-button">Proceed to Checkout</button>
+            <button 
+              className="checkout-button" 
+              onClick={() => navigate("/payment", {
+                state: { subtotal, tax, shipping, total }
+              })}
+            >
+              Proceed to Checkout
+            </button>
             <Link to="/" className="continue-shopping">
               Continue Shopping
             </Link>

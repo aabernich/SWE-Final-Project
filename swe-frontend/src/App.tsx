@@ -9,6 +9,7 @@ import {Register} from './pages/Register';
 import { Login } from './pages/Login';
 import Cart from './pages/Cart'; 
 import Review from './pages/Review';
+import Payment from "./pages/Payment"; 
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/review/:productId" element={<Review />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </div>
     </Router>

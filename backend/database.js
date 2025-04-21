@@ -163,3 +163,28 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     }
   }
   
+  export async function emptyCart(userId){
+    try{
+        const [result] = await pool.query(
+            `DELETE FROM cart_items 
+            WHERE user_id = ?`,
+            [userId]
+        )
+        return result.affectedRows > 0;
+    } catch (error){
+        console.error("Cart not emptied", error);
+        throw error;
+    }
+  }
+
+  export async function addPastPurchase(userId,productId){
+    try{
+        const [result] = await pool.query(
+            `INSERT INTO purchases (user_id, product_id)
+            VALUES (?, ?)`,[userId,productId])
+        return result.affectedRows > 0;
+    } catch (error){
+        console.error("Cannot add Item", error);
+        throw error;
+    }
+   }

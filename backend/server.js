@@ -3,9 +3,9 @@ import cors from 'cors'
 
 import{getUser, createUser} from './database.js'
 import { filterProducts, getAvailableFilters, getProductById } from './database.js';
-import { addToCart, getCartItems, deleteCartItem, updateCartQuantity } from './database.js';
+import { addToCart, getCartItems, deleteCartItem, updateCartQuantity, emptyCart } from './database.js';
 import { leaveReview, getReviews } from './database.js';
-import { getPastPurchases } from './database.js';
+import { getPastPurchases, addPastPurchase } from './database.js';
 
 const app = express()
 
@@ -77,6 +77,12 @@ app.delete("/cart", async (req, res) => {
     res.status(200).send(cart)
 })
 
+app.delete("/cart/empty", async (req, res) => {
+    const {userId} = req.query
+    const result = await emptyCart(userId)
+    res.status(200).send(result)
+})
+
 
 app.put("/cart/quantity", async (req, res) => {
     const { id, quantity } = req.body;
@@ -112,6 +118,12 @@ app.get("/purchases", async (req, res) => {
     const {userId} = req.query
     const purchases = await getPastPurchases(userId)
     res.status(200).send(purchases)
+})
+
+app.post("/purchases", async (req, res) => {
+    const {userId, productId} = req.body
+    const addedPurchase = await addPastPurchase(userId, productId)
+    res.status(200).send(addedPurchase)
 })
   
 
