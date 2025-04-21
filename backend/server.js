@@ -5,6 +5,7 @@ import{getUser, createUser} from './database.js'
 import { filterProducts, getAvailableFilters, getProductById } from './database.js';
 import { addToCart, getCartItems, deleteCartItem, updateCartQuantity } from './database.js';
 import { leaveReview, getReviews } from './database.js';
+import { getPastPurchases } from './database.js';
 
 const app = express()
 
@@ -105,6 +106,12 @@ app.get("/reviews", async (req, res) => {
         return res.status(404).json({ message: "Reviews not found." });
     }
     res.status(200).send(reviews)
+})
+
+app.get("/purchases", async (req, res) => {
+    const {userId} = req.query
+    const purchases = await getPastPurchases(userId)
+    res.status(200).send(purchases)
 })
   
 

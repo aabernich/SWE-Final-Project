@@ -8,6 +8,7 @@ import ProductPage from "./pages/ProductPage";
 import {Register} from './pages/Register';
 import { Login } from './pages/Login';
 import Cart from './pages/Cart'; 
+import Review from './pages/Review';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           } } />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/review/:productId" element={<Review />} />
         </Routes>
       </div>
     </Router>

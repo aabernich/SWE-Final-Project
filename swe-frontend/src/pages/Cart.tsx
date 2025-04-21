@@ -14,8 +14,15 @@ interface CartItem {
   image: string;
 }
 
+interface PastPurchase {
+    name: string;
+    manufacturer: string;
+    id: number;
+}
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [pastPurchases, setPastPurchases] = useState<PastPurchase[]>([]);
   const userId = localStorage.getItem("userID");
 
   useEffect(() => {
@@ -30,7 +37,19 @@ const Cart = () => {
       }
     };
 
+    const fetchPastPurchases = async () => {
+        try {
+          const response = await axios.get("http://localhost:8080/purchases", {
+            params: { userId },
+          });
+          setPastPurchases(response.data);
+        } catch (err) {
+          console.error("Error fetching past purchases:", err);
+        }
+      };
+
     fetchCart();
+    fetchPastPurchases();
   }, [userId]);
 
   const updateQuantity = async (id: number, newQuantity: number) => {
@@ -132,6 +151,24 @@ const Cart = () => {
           </div>
         </>
       )}
+
+        <div className="past-purchases">
+        <h2>Past Purchases</h2>
+        {pastPurchases.length === 0 ? (
+          <p>You haven't purchased anything yet.</p>
+        ) : (
+          <ul>
+            {pastPurchases.map((purchase, index) => (
+              <li key={index}>
+                <strong>{purchase.name  + ' '}</strong> by {purchase.manufacturer + ', '}
+                <Link to={`/review/${purchase.id}`}>
+                Leave a Review
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

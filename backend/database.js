@@ -145,5 +145,21 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     }
   }
 
-
+  export async function getPastPurchases(userId) {
+    try {
+      const [result] = await pool.query(
+        `
+        SELECT p.name, p.manufacturer, p.id
+        FROM purchases pu
+        JOIN products p ON pu.product_id = p.id
+        WHERE pu.user_id = ?
+        `,
+        [userId]
+      );
+      return result;
+    } catch (error) {
+      console.error("Error finding past purchases", error);
+      throw error;
+    }
+  }
   
