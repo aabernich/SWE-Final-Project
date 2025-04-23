@@ -10,7 +10,7 @@ const pool = mysql.createPool({  // Create a connection pool to interact with th
     database: process.env.MYSQL_DATABASE
 }).promise()
 
-export async function getUser(email, password){
+export async function getUser(email, password){ // get user info
     const [result] = await pool.query(`
     SELECT * 
     FROM users 
@@ -20,7 +20,7 @@ export async function getUser(email, password){
     return result[0]
 }
 
-export async function createUser(username, email, password){
+export async function createUser(username, email, password){ // make a user
     await pool.query(`
     INSERT INTO users (username, email, passwordHash) 
     VALUES (?, ?, ?)
@@ -28,7 +28,7 @@ export async function createUser(username, email, password){
     return getUser(username, password)
 }
 
-export async function filterProducts(sortOrder, selectedBrand, selectedCountry) {
+export async function filterProducts(sortOrder, selectedBrand, selectedCountry) { // filter products
     let query = `SELECT * FROM products WHERE 1=1`;
     let queryParams = [];
   
@@ -72,7 +72,7 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     return result[0];
   }
 
-  export async function addToCart(userId, productId, size, color) {
+  export async function addToCart(userId, productId, size, color) { // add item to cart
     await pool.query(`
       INSERT INTO cart_items (user_id, product_id, size, color) 
       VALUES (?, ?, ?, ?)
@@ -106,7 +106,7 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     }
   }
 
-  export async function deleteCartItem(Id) {
+  export async function deleteCartItem(Id) { 
     const [result] = await pool.query(`
       DELETE FROM cart_items 
       WHERE id = ?
@@ -114,7 +114,7 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     return result.affectedRows > 0;
   }
 
-  export async function leaveReview(productId, userId, rating, review) {
+  export async function leaveReview(productId, userId, rating, review) { // reviews
     const [result] = await pool.query(`
       INSERT INTO product_reviews (product_id, user_id, rating, comment) 
       VALUES (?, ?, ?, ?)
@@ -145,7 +145,7 @@ export async function filterProducts(sortOrder, selectedBrand, selectedCountry) 
     }
   }
 
-  export async function getPastPurchases(userId) {
+  export async function getPastPurchases(userId) { // purchase info
     try {
       const [result] = await pool.query(
         `
