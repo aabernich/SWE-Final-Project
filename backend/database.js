@@ -3,7 +3,7 @@ import mysql from 'mysql2'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const pool = mysql.createPool({
+const pool = mysql.createPool({  // Create a connection pool to interact with the MySQL database using credentials from .env
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
