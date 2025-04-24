@@ -106,9 +106,6 @@ const Cart = () => {
           <div className="cart-items">
             {cartItems.map(item => (
               <div className="cart-item" key={item.id}>
-                <div className="item-image">
-                  <img src={item.image} alt={item.name} />
-                </div>
                 <div className="item-details">
                   <h3>{item.name}</h3>
                   <p>${parseFloat(item.price).toFixed(2)}</p>

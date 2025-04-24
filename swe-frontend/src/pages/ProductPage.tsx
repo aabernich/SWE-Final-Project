@@ -92,9 +92,6 @@ const ProductPage = () => {
     <div className="product-page-container">
       <Header />
       <div className="product-info-section">
-        <div className="product-image">
-          <img src={product.image} alt={product.name} />
-        </div>
 
         <div className="product-details">
           <h1 className="product-title">{product.name}</h1>

@@ -61,7 +61,7 @@ const Review = () => {
             key={star}
             className={`star ${star <= rating ? "filled" : ""}`}
             onClick={() => handleRatingChange(star)}
-            style={{ cursor: "pointer", fontSize: "20px", color: star <= rating ? "gold" : "gray" }}
+            style={{ cursor: "pointer", fontSize: "30px", color: star <= rating ? "gold" : "gray" }}
           >
             ★
           </span>
