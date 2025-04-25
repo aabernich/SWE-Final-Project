@@ -1,3 +1,5 @@
+//Tutorial code for backend server and database: https://www.youtube.com/watch?v=Hej48pi_lOc&t=1366s
+
 import express from 'express'
 import cors from 'cors'
 
